@@ -1,0 +1,22 @@
+# Generated packages
+.pesde/
+luau_packages/
+lune_packages/
+roblox_packages/
+/pesde.lock
+
+# Generated networking code
+network/
+
+# Roblox place and lock files
+/RoBattles.rbxlx
+/*.rbxlx.lock
+/*.rbxl.lock
+
+# Generated sourcemap
+sourcemap.json
+
+# Tungsten
+/.env
+/tungsten.lock.toml
+/src/assets/

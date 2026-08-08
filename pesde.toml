@@ -1,0 +1,44 @@
+name = "dale_devs/catchsquishies"
+version = "0.1.0"
+license = "MIT"
+
+[target]
+environment = "roblox"
+
+[indices]
+default = "https://github.com/pesde-pkg/index"
+
+[scripts]
+roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
+sourcemap_generator = ".pesde/scripts/sourcemap_generator.luau"
+
+[dev_dependencies]
+scripts = { name = "pesde/scripts_rojo", version = "^0.2.0", target = "lune" }
+rojo = { name = "pesde/rojo", version = "^7.5.1", target = "lune" }
+stylua = { name = "pesde/stylua", version = "^2.5.0", target = "lune" }
+selene = { name = "pesde/selene", version = "^0.31.0", target = "lune" }
+blink = { name = "1axen/blink", version = "^0.18.8", target = "lune" }
+
+[dependencies]
+Jecs = { wally = "ukendio/jecs", version = "=0.8.3" }
+Planck = { wally = "yetanotherclown/planck", version = "=0.3.0-alpha.2" }
+PlanckJabby = { wally = "yetanotherclown/planck-jabby", version = "=0.3.0-alpha.1" }
+PlanckRunService = { wally = "yetanotherclown/planck-runservice", version = "=0.2.0" }
+Jabby = { wally = "alicesaidhi/jabby", version = "=0.4.0" }
+Fusion = { wally = "uxnkown/fusion", version = "=0.3.0" }
+ProfileStore = { wally = "uxnknwn/profilestore", version = "=1.0.2" }
+Signal = { wally = "red-blox/signal", version = "^2.0.0" }
+Ratelimit = { wally = "red-blox/ratelimit", version = "^1.0.0" }
+Clock = { wally = "red-blox/clock", version = "^1.0.0" }
+Collection = { wally = "red-blox/collection", version = "^1.0.0" }
+TopbarPlus = { wally = "uxnknwn/topbarplus", version = "=3.0.2-rc.1" }
+cmdr = { wally = "evaera/cmdr", version = "=1.12.0" }
+ExpressivePrompts = { wally = "miagobble/expressive-prompts", version = "=1.1.4" }
+EzVisualz = { wally = "arxkdev/ezvisualz", version = "=1.2.0" }
+
+[wally_indices]
+default = "https://github.com/UpliftGames/wally-index"
+
+[engines]
+pesde = "^0.7.0"
+lune = "^0.10.2"

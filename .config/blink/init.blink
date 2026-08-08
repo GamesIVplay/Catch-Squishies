@@ -1,0 +1,749 @@
+option ClientOutput = "../../network/Client.luau"
+option ServerOutput = "../../network/Server.luau"
+option Casing = Pascal
+
+import "./Types.blink" as Types
+
+event ClientLoaded {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event Notification {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Text: string,
+        Duration: u8?,
+        Type: Types.NotificationType
+    }
+}
+
+event SellDialogMessage {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: string(0..240)
+}
+
+event SellEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event TutorialCompleteEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id
+    }
+}
+
+event TutorialSubevent {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.TutorialSubevent
+}
+
+event BuyEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id
+    }
+}
+
+event RobuxPurchaseEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id
+    }
+}
+
+event CollectEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id,
+        ItemId: Types.InventoryItemId
+    }
+}
+
+event CollectAllEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id
+    }
+}
+
+event FeedEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id,
+        ItemId: Types.InventoryItemId
+    }
+}
+
+event CashChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.Cash
+}
+
+event MoneyMultiplierChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.MoneyMultiplier
+}
+
+event FriendBoostChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.FriendBoost
+}
+
+event LassoChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.Lasso
+}
+
+event OwnedLassosChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.OwnedLassos
+}
+
+event OwnedSquishiesChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Id: Types.InventoryItemId,
+        Type: Types.InventoryItemType,
+        Kind: Types.SquishyKind,
+        Name: Types.InventoryItemName,
+        Rarity: Types.SquishyRarity,
+        Image: Types.AssetImage,
+        BaseIncomePerSec: u32,
+        FinalIncomePerSec: u32,
+        Weight: f64,
+        Mutation: Types.Mutation,
+        EventMutations: Types.EventMutation[0..8],
+        Level: u8,
+        XP: u32,
+        Equipped: boolean,
+        Favorite: boolean,
+        HotbarSlot: u8?
+    }[0..512]
+}
+
+event OwnedFoodChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Id: Types.InventoryItemId,
+        Type: Types.InventoryItemType,
+        Name: Types.InventoryItemName,
+        Rarity: Types.SquishyRarity,
+        Image: Types.AssetImage,
+        Amount: u16,
+        XPValue: u32,
+        Favorite: boolean,
+        HotbarSlot: u8?
+    }[0..128]
+}
+
+event FoodStockChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.FoodStock
+}
+
+event LastFoodRestockChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.LastFoodRestock
+}
+
+event FoodRestockEndTimeChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.FoodRestockEndTime
+}
+
+event HotbarSlotsChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Slot: u8,
+        ItemId: Types.InventoryItemId,
+        ItemType: Types.InventoryItemType
+    }[0..8]
+}
+
+event IndexChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.Index
+}
+
+event ClaimedIndexRewardsChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.ClaimedIndexRewards
+}
+
+event PlaytimeStartChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.PlaytimeStart
+}
+
+event ClaimedPlaytimeRewardsChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.ClaimedPlaytimeRewards
+}
+
+event DailyStartChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.DailyStart
+}
+
+event ClaimedDailyRewardsChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.ClaimedDailyRewards
+}
+
+event OfflineRewardChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Amount: f64,
+        Seconds: u32
+    }
+}
+
+event ClaimOfflineReward {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event TutorialStepChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.TutorialStep
+}
+
+event EventStateChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        NextEventAt: f64,
+        ActiveEvents: struct {
+            Name: Types.EventName,
+            StartedAt: f64,
+            EndsAt: f64,
+            Source: Types.EventSource
+        }[0..8]
+    }
+}
+
+event BuyLasso {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.Lasso
+}
+
+event EquipLasso {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.Lasso
+}
+
+event BuyFood {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.InventoryItemName
+}
+
+event PrepareGift {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        TargetUserId: Types.Id,
+        ProductKey: Types.RobuxProductKey
+    }
+}
+
+event GiftPrepared {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        TargetUserId: Types.Id,
+        ProductKey: Types.RobuxProductKey,
+        ProductId: f64
+    }
+}
+
+event SellSquishies {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: string(1..16)
+}
+
+event RequestPlotAreaUnlock {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: string(1..32)
+}
+
+event SetHotbarSlot {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Slot: u8,
+        ItemId: Types.InventoryItemId,
+        ItemType: Types.InventoryItemType
+    }
+}
+
+event ClearHotbarSlot {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        Slot: u8
+    }
+}
+
+event EquipBestSquishies {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event SwapHotbarSlots {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        SourceSlot: u8,
+        TargetSlot: u8
+    }
+}
+
+event SetInventoryFavorite {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId,
+        ItemType: Types.InventoryItemType,
+        Favorite: boolean
+    }
+}
+
+event ClaimIndexReward {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.IndexKey
+}
+
+event ClaimPlaytimeReward {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: u8
+}
+
+event ClaimDailyReward {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: u8
+}
+
+event EquippedInventorySlotChanged {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: Types.InventorySlotName
+}
+
+event WalkingSquishySyncRequest {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event WalkingSquishyRequest {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId,
+        Equipped: boolean
+    }
+}
+
+event WalkingSquishyChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id,
+        Equipped: boolean,
+        ItemId: Types.InventoryItemId,
+        Kind: Types.SquishyKind,
+        Name: Types.InventoryItemName,
+	        Rarity: Types.SquishyRarity,
+	        Weight: f64,
+	        Mutation: Types.Mutation,
+	        EventMutations: Types.EventMutation[0..8],
+	        Level: u8,
+	        BaseIncomePerSec: u32,
+	        FinalIncomePerSec: u32,
+	        LassoName: Types.Lasso
+	    }
+}
+
+event PlotSquishiesChanged {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id,
+        SuppressCollectBounce: boolean?,
+        Items: struct {
+            Id: Types.InventoryItemId,
+            Type: Types.InventoryItemType,
+            Kind: Types.SquishyKind,
+            Name: Types.InventoryItemName,
+            Rarity: Types.SquishyRarity,
+            Image: Types.AssetImage,
+            BaseIncomePerSec: u32,
+            FinalIncomePerSec: u32,
+            Weight: f64,
+            Mutation: Types.Mutation,
+            EventMutations: Types.EventMutation[0..8],
+            Level: u8,
+            XP: u32,
+            Favorite: boolean,
+            TutorialRole: string(0..16)?,
+            PositionX: f64,
+            PositionY: f64,
+            PositionZ: f64,
+            StoredCash: f64,
+            LastCashUpdate: f64,
+            MoveState: Types.PlotSquishyMoveState,
+            MoveStartX: f64,
+            MoveStartY: f64,
+            MoveStartZ: f64,
+            MoveTargetX: f64,
+            MoveTargetY: f64,
+            MoveTargetZ: f64,
+            MoveStartedAt: f64,
+            MoveDuration: f64,
+            IdleUntil: f64,
+            MoveIndex: u32
+        }[0..128]
+    }
+}
+
+event PlotSquishiesSyncRequest {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event PlacePlotSquishy {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId
+    }
+}
+
+event RemovePlotSquishy {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId
+    }
+}
+
+event CollectPlotSquishyCash {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId
+    }
+}
+
+event CollectAllPlotSquishyCash {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true
+}
+
+event FeedPlotSquishy {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        ItemId: Types.InventoryItemId,
+        Amount: u8
+    }
+}
+
+event LassoThrowStarted {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        AimOriginX: f64,
+        AimOriginY: f64,
+        AimOriginZ: f64,
+        AimDirectionX: f64,
+        AimDirectionY: f64,
+        AimDirectionZ: f64
+    }
+}
+
+event LassoThrowVisual {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        PlayerUserId: Types.Id,
+        LassoName: Types.Lasso,
+        AimOriginX: f64,
+        AimOriginY: f64,
+        AimOriginZ: f64,
+        AimDirectionX: f64,
+        AimDirectionY: f64,
+        AimDirectionZ: f64
+    }
+}
+
+event StartCatch {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        AimOriginX: f64,
+        AimOriginY: f64,
+        AimOriginZ: f64,
+        AimDirectionX: f64,
+        AimDirectionY: f64,
+        AimDirectionZ: f64
+    }
+}
+
+event CatchClick {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId
+    }
+}
+
+event CancelCatch {
+    From: Client,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId
+    }
+}
+
+event CatchStarted {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId,
+        TargetEntity: Types.Id,
+        TargetName: Types.SquishyName,
+        TargetKind: Types.SquishyKind,
+        TargetImage: Types.AssetImage,
+        TargetRarity: Types.SquishyRarity,
+        Strength: u16,
+        ClicksNeeded: u16,
+        Difficulty: u8,
+        DepletionTweenTime: f64,
+        LockProgress: f64,
+        Progress: f64
+    }
+}
+
+event CatchProgress {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId,
+        Progress: f64,
+        TweenTime: f64?
+    }
+}
+
+event CatchLocked {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId
+    }
+}
+
+event CatchCancelled {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId,
+        Reason: Types.CatchCancelReason,
+        Message: Types.CatchMessage
+    }
+}
+
+event CatchCompleted {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId,
+        ItemId: Types.InventoryItemId,
+        HotbarSlot: u8?
+    }
+}
+
+event CatchPullEffect {
+    From: Server,
+    Type: Reliable,
+    Call: SingleSync,
+	Poll: true,
+    Data: struct {
+        CatchId: Types.CatchId,
+        PlayerUserId: Types.Id
+    }
+}

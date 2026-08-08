@@ -1,0 +1,38 @@
+{
+  "name": "catch-squishies",
+  "servePlaceIds": [131795363676528],
+  "emitLegacyScripts": false,
+  "tree": {
+    "$className": "DataModel",
+    "Workspace": {
+      "$className": "Workspace",
+      "$properties": {
+        "StreamingEnabled": false
+      }
+    },
+    "ReplicatedStorage": {
+      "Shared": {
+        "$path": "src/Shared"
+      },
+      "Packages": {
+        "$path": "roblox_packages"
+      }
+    },
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src/Server"
+      },
+      "Network": {
+        "$path": "network/Server.luau"
+      }
+    },
+    "ReplicatedFirst": {
+      "Client": {
+        "$path": "src/Client"
+      },
+      "Network": {
+        "$path": "network/Client.luau"
+      }
+    }
+  }
+}

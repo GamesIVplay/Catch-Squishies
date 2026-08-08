@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pesde
+        uses: pesde-pkg/setup@v1
+        with:
+          version: latest
+          lune-version: v0.10.5
+          cache: true
+
+      - name: Install Packages
+        timeout-minutes: 10
+        run: sh scripts/install-packages.sh
+
+      - name: Validate Shell Scripts
+        run: find scripts -type f -name "*.sh" -exec sh -n {} \;
+
+      - name: Generate Network
+        timeout-minutes: 10
+        run: sh scripts/generate-network.sh
+
+      - name: Check Formatting
+        run: pesde x pesde/stylua -- --check src
+
+      - name: Lint
+        run: pesde x pesde/selene -- src
+
+      - name: Build
+        run: pesde x pesde/rojo -- build default.project.json --output /tmp/catch-squishies.rbxlx

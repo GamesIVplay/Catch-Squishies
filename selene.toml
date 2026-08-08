@@ -1,0 +1,7 @@
+std = "selene_definitions"
+
+[config]
+exclude = ["network/Client.luau", "network/Server.luau"]
+
+[rules]
+global_usage = "allow"
